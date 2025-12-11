@@ -13,6 +13,7 @@ public interface UserRepository  extends JpaRepository<Employee,Integer>{
 
     @Query("SELECT e FROM Employee e WHERE e.isDeleted = false")
     List<Employee> findAllActiveEmployees();
-
+    @Query("SELECT e FROM Employee e")
+    List<Employee> findAll();
 }
 

@@ -71,6 +71,11 @@ public class UserController {
        return ResponseEntity.ok("deleted successfully");
 
     }
+    @GetMapping("/getalluserwithdeleted")
+    public ResponseEntity<List<Employee>> getAllUsersWithDeleted(){
+        return ResponseEntity.ok(userService.getAllUsersWithDeleted());
+    }
+
 
 
 

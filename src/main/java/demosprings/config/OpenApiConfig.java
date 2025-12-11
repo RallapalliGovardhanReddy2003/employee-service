@@ -14,7 +14,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Employee registration")
                         .version("v1")
-                        .description("Employee portal"));
+                        .description("Employee portal documentation"));
     }
 }
 

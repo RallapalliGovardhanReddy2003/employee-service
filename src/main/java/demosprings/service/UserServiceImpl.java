@@ -52,6 +52,9 @@ public class UserServiceImpl implements UserService {
 	public List<Employee> getAllUsers(){
 		return userRepository.findAllActiveEmployees();
 	}
+	public List<Employee> getAllUsersWithDeleted(){
+		return userRepository.findAll();
+	}
 
 	public void hardDelete(Integer id){
 		 userRepository.deleteById(id);

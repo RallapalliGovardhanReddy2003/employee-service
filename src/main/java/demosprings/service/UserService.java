@@ -17,6 +17,8 @@ public interface UserService {
 	
 	List<Employee> getAllUsers();
 
+	List<Employee> getAllUsersWithDeleted();
+
 
 	void softDeleteUser(Integer id);
 }
