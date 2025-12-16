@@ -38,6 +38,17 @@ class UserServiceImplTest {
         assertNotNull(createdUser);
         verify(userRepository, times(1)).save(user);
     }
+    @Test
+    void testCreateUser_Exception() {
+        Employee user =new Employee();
+        user.setFirstname("R Govardhan Reddy");
+        user.setLastname("rallaplli");
+
+        when(userRepository.save(user)).thenThrow(new RuntimeException("Database error"));
+        Exception exception = assertThrows(RuntimeException.class, () ->{
+            userService.createUser(user);
+        });
+    }
 
     @Test
     void testUpdateUser() {
@@ -57,7 +68,16 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findById(1);
         verify(userRepository, times(1)).save(existingUser);
     }
+    @Test
+    void testUpdateUser_NotFound() {
+        Employee updatedUser =new Employee();
+        updatedUser.setFirstname("R Govardhan");
 
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> {
+            userService.updateUser(1,updatedUser);
+        });
+    }
     @Test
     void testDeleteUser() {
         Employee user = new Employee();
@@ -69,6 +89,26 @@ class UserServiceImplTest {
 
         verify(userRepository, times(1)).delete(user);
     }
+    @Test
+    void testDeleteUser_NotFound() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            userService.deleteUser(1);
+        });
+    }
+    @Test
+    void testGetAllUsers() {
+        userService.getAllUsers();
+
+        verify(userRepository, times(1)).findAllActiveEmployees();
+    }
+    @Test
+    void testGetAllUsersWithDeleted() {
+        userService.getAllUsersWithDeleted();
+        verify(userRepository,times(1)).findAll();
+    }
+
 
     @Test
     void testGetUserById() {
@@ -83,6 +123,16 @@ class UserServiceImplTest {
         assertEquals(1, result.getId());
         verify(userRepository, times(1)).findById(1);
     }
+    @Test
+    void testGetUserById_NotFound() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () ->{
+            userService.getUserById(1);
+        });
+
+
+    }
 
     @Test
     void testHardDelete() {
@@ -91,6 +141,13 @@ class UserServiceImplTest {
         userService.hardDelete(1);
 
         verify(userRepository, times(1)).deleteById(1);
+    }
+    @Test
+    void testHardDelete_Exception() {
+        doThrow(new RuntimeException("Database error")).when(userRepository).deleteById(1);
+        assertThrows(RuntimeException.class, () -> {
+            userService.hardDelete(1);
+        });
     }
 
     @Test
@@ -106,5 +163,14 @@ class UserServiceImplTest {
         assertTrue(user.isDeleted());
         verify(userRepository, times(1)).findById(1);
         verify(userRepository, times(1)).save(user);
+    }
+
+    @Test
+    void testSoftDeleteUser_NotFound(){
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            userService.softDeleteUser(1);
+        });
     }
 }
