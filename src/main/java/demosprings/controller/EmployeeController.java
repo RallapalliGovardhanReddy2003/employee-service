@@ -10,23 +10,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import demosprings.enity.Employee;
-import demosprings.service.UserService;
+import demosprings.entity.Employee;
+import demosprings.service.EmployeeService;
 
 @RestController
 @RequestMapping("/User")
 @Validated
-public class UserController {
+public class EmployeeController {
 
 
-	private final UserService userService;
+	private final EmployeeService employeeService;
     private final EmailService emailService;
     private final SmsService smsService;
     @Value("${twilio.from-number}")
     private String from;
 
-    public UserController(UserService userService, EmailService emailService, SmsService smsService) {
-        this.userService = userService;
+    public EmployeeController(EmployeeService employeeService, EmailService emailService, SmsService smsService) {
+        this.employeeService = employeeService;
         this.emailService = emailService;
         this.smsService = smsService;
     }
@@ -35,7 +35,7 @@ public class UserController {
     public ResponseEntity<Employee> createUser(@Validated @RequestBody Employee user,
                                                @RequestParam(defaultValue = "false") boolean sendEmail,
                                                @RequestParam(defaultValue = "false") boolean sendSms) {
-        Employee created = userService.createUser(user);
+        Employee created = employeeService.createUser(user);
         if(sendEmail){
         emailService.sendSimple(created.getEmailid(), "registration confirmataion",
                 "successfully registered");}
@@ -46,34 +46,34 @@ public class UserController {
     }
 	@GetMapping("/getallusers")
     public ResponseEntity<List<Employee>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+        return ResponseEntity.ok(employeeService.getAllUsers());
     }
 
 
 	@GetMapping("/getuser/{id}")
     public ResponseEntity<Employee> getUserById(@PathVariable Integer id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+        return ResponseEntity.ok(employeeService.getUserById(id));
     }
 
 	 @PutMapping("/updateuser/{id}")
 	    public ResponseEntity<Employee> updateUser(@PathVariable Integer id,
 	                                           @Validated @RequestBody Employee user) {
-	        return ResponseEntity.ok(userService.updateUser(id, user));
+	        return ResponseEntity.ok(employeeService.updateUser(id, user));
 	    }
     @DeleteMapping("/harddelete/{id}")
-    public ResponseEntity<String> harddelete(@PathVariable Integer id){
-        userService.deleteUser(id);
+    public ResponseEntity<String> hardDelete(@PathVariable Integer id){
+        employeeService.deleteUser(id);
        return ResponseEntity.ok("deleted successfully");
     }
     @DeleteMapping ("/softdelete/{id}")
     public ResponseEntity<String> softDeleteUser(@PathVariable Integer id){
-        userService.softDeleteUser(id);
+        employeeService.softDeleteUser(id);
        return ResponseEntity.ok("deleted successfully");
 
     }
     @GetMapping("/getalluserwithdeleted")
     public ResponseEntity<List<Employee>> getAllUsersWithDeleted(){
-        return ResponseEntity.ok(userService.getAllUsersWithDeleted());
+        return ResponseEntity.ok(employeeService.getAllUsersWithDeleted());
     }
 
 

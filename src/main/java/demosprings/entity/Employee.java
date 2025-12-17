@@ -1,4 +1,4 @@
-package demosprings.enity;
+package demosprings.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ public class Employee {
     private String lastname;
 
    // @Pattern(regexp = "^[98][0-9]{9}$", message = "Mobile number must start with 9 or 8 and be 10 digits")
-    private String monbno;   // changed to String for pattern validation
+    private String mobileno;   // changed to String for pattern validation
 
     @Pattern(regexp = "^[A-Za-z0-9.]+@gmail\\.com$", message = "Email must be valid and end with @gmail.com")
     private String emailid;
@@ -62,11 +62,11 @@ public class Employee {
     }
 
     public String getMonbno() {
-        return monbno;
+        return mobileno;
     }
 
     public void setMonbno(String monbno) {
-        this.monbno = monbno;
+        this.mobileno = monbno;
     }
 
     public String getEmailid() {

@@ -1,8 +1,8 @@
 package demosprings.service;
 
-import demosprings.enity.Employee;
+import demosprings.entity.Employee;
 import demosprings.exception.ResourceNotFoundException;
-import demosprings.repository.UserRepository;
+import demosprings.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,17 +12,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceImplTest {
+class EmployeeServiceImplTest {
 
 
-    private UserRepository userRepository;
-    private UserServiceImpl userService;
+    private EmployeeRepository employeeRepository;
+    private EmployeeServiceImpl userService;
 
     @BeforeEach
 
     void setUp() {
-    userRepository = mock(UserRepository.class);
-    userService = new UserServiceImpl(userRepository);
+    employeeRepository = mock(EmployeeRepository.class);
+    userService = new EmployeeServiceImpl(employeeRepository);
 }
 
     @Test
@@ -31,12 +31,12 @@ class UserServiceImplTest {
         user.setFirstname("R Govardhan Reddy");
         user.setLastname("rallapalli");
 
-        when(userRepository.save(user)).thenReturn(user);
+        when(employeeRepository.save(user)).thenReturn(user);
 
         Employee createdUser = userService.createUser(user);
 
         assertNotNull(createdUser);
-        verify(userRepository, times(1)).save(user);
+        verify(employeeRepository, times(1)).save(user);
     }
     @Test
     void testCreateUser_Exception() {
@@ -44,7 +44,7 @@ class UserServiceImplTest {
         user.setFirstname("R Govardhan Reddy");
         user.setLastname("rallaplli");
 
-        when(userRepository.save(user)).thenThrow(new RuntimeException("Database error"));
+        when(employeeRepository.save(user)).thenThrow(new RuntimeException("Database error"));
         Exception exception = assertThrows(RuntimeException.class, () ->{
             userService.createUser(user);
         });
@@ -59,21 +59,21 @@ class UserServiceImplTest {
         Employee updatedUser = new Employee();
         updatedUser.setFirstname("R Govardhan");
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(existingUser)).thenReturn(existingUser);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(existingUser));
+        when(employeeRepository.save(existingUser)).thenReturn(existingUser);
 
         Employee result = userService.updateUser(1, updatedUser);
 
         assertEquals("R Govardhan", result.getFirstname());
-        verify(userRepository, times(1)).findById(1);
-        verify(userRepository, times(1)).save(existingUser);
+        verify(employeeRepository, times(1)).findById(1);
+        verify(employeeRepository, times(1)).save(existingUser);
     }
     @Test
     void testUpdateUser_NotFound() {
         Employee updatedUser =new Employee();
         updatedUser.setFirstname("R Govardhan");
 
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class, () -> {
             userService.updateUser(1,updatedUser);
         });
@@ -83,15 +83,15 @@ class UserServiceImplTest {
         Employee user = new Employee();
         user.setId(1);
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(user));
 
         userService.deleteUser(1);
 
-        verify(userRepository, times(1)).delete(user);
+        verify(employeeRepository, times(1)).delete(user);
     }
     @Test
     void testDeleteUser_NotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> {
             userService.deleteUser(1);
@@ -101,12 +101,12 @@ class UserServiceImplTest {
     void testGetAllUsers() {
         userService.getAllUsers();
 
-        verify(userRepository, times(1)).findAllActiveEmployees();
+        verify(employeeRepository, times(1)).findAllActiveEmployees();
     }
     @Test
     void testGetAllUsersWithDeleted() {
         userService.getAllUsersWithDeleted();
-        verify(userRepository,times(1)).findAll();
+        verify(employeeRepository,times(1)).findAll();
     }
 
 
@@ -115,17 +115,17 @@ class UserServiceImplTest {
         Employee user = new Employee();
         user.setId(1);
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(user));
 
         Employee result = userService.getUserById(1);
 
         assertNotNull(result);
         assertEquals(1, result.getId());
-        verify(userRepository, times(1)).findById(1);
+        verify(employeeRepository, times(1)).findById(1);
     }
     @Test
     void testGetUserById_NotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () ->{
             userService.getUserById(1);
@@ -136,15 +136,15 @@ class UserServiceImplTest {
 
     @Test
     void testHardDelete() {
-        doNothing().when(userRepository).deleteById(1);
+        doNothing().when(employeeRepository).deleteById(1);
 
         userService.hardDelete(1);
 
-        verify(userRepository, times(1)).deleteById(1);
+        verify(employeeRepository, times(1)).deleteById(1);
     }
     @Test
     void testHardDelete_Exception() {
-        doThrow(new RuntimeException("Database error")).when(userRepository).deleteById(1);
+        doThrow(new RuntimeException("Database error")).when(employeeRepository).deleteById(1);
         assertThrows(RuntimeException.class, () -> {
             userService.hardDelete(1);
         });
@@ -155,19 +155,19 @@ class UserServiceImplTest {
         Employee user = new Employee();
         user.setId(1);
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(userRepository.save(user)).thenReturn(user);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(user));
+        when(employeeRepository.save(user)).thenReturn(user);
 
         userService.softDeleteUser(1);
 
         assertTrue(user.isDeleted());
-        verify(userRepository, times(1)).findById(1);
-        verify(userRepository, times(1)).save(user);
+        verify(employeeRepository, times(1)).findById(1);
+        verify(employeeRepository, times(1)).save(user);
     }
 
     @Test
     void testSoftDeleteUser_NotFound(){
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> {
             userService.softDeleteUser(1);

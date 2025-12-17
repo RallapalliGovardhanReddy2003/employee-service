@@ -5,23 +5,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
-import demosprings.events.UserCreatedEvent;
+import demosprings.events.EmployeeCreatedEvent;
 import demosprings.service.EmailService;
 import demosprings.service.SmsService;
 
 @Component
-public class UserNotificationListener {
+public class EmployeeNotificationListener {
 
     private final EmailService emailService;
     private final SmsService smsService;
 
-    public UserNotificationListener(EmailService emailService, SmsService smsService) {
+    public EmployeeNotificationListener(EmailService emailService, SmsService smsService) {
         this.emailService = emailService;
         this.smsService = smsService;
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onUserCreated(UserCreatedEvent event) {
+    public void onUserCreated(EmployeeCreatedEvent event) {
         var u = event.getEmployee();
 
         // Email
