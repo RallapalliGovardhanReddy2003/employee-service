@@ -1,9 +1,6 @@
 package demosprings.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
 
@@ -25,6 +22,9 @@ public class Employee {
 
     @Pattern(regexp = "^[A-Za-z0-9.]+@gmail\\.com$", message = "Email must be valid and end with @gmail.com")
     private String emailid;
+
+    private Integer employeeId;
+
 
     private boolean isDeleted;
 
