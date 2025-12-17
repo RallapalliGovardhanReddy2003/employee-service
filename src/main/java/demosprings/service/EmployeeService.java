@@ -21,6 +21,8 @@ public interface EmployeeService {
 
 
 	void softDeleteUser(Integer id);
+
+	List<Employee> getEmployeesByLocation(String address);
 }
 
 

@@ -107,6 +107,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("User soft-deleted successfully with id: {}", id);
 	}
 
+	public List<Employee> getEmployeesByLocation(String address) {
+		logger.info("Fetching employees by location: {}", address);
+		return employeeRepository.findEmployeesByAddress(address);
+	}
+
 
 }
 

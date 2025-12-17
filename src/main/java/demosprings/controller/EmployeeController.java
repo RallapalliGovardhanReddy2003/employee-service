@@ -76,6 +76,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAllUsersWithDeleted());
     }
 
+    @GetMapping("/by-location/{address}")
+    public ResponseEntity<List<Employee>> getEmployeesByLocation(@PathVariable String address){
+        return ResponseEntity.ok(employeeService.getEmployeesByLocation(address));
+    }
+
 
 
 

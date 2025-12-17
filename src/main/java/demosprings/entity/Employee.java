@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern;
 
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -17,7 +18,7 @@ public class Employee {
    
     private String lastname;
 
-   // @Pattern(regexp = "^[98][0-9]{9}$", message = "Mobile number must start with 9 or 8 and be 10 digits")
+    //@Pattern(regexp = "^[98][0-9]{9}$", message = "Mobile number must start with 9 or 8 and be 10 digits")
     private String mobileno;   // changed to String for pattern validation
 
     @Pattern(regexp = "^[A-Za-z0-9.]+@gmail\\.com$", message = "Email must be valid and end with @gmail.com")
