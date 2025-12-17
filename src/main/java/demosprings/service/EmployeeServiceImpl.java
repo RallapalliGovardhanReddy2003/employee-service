@@ -7,19 +7,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import demosprings.enity.Employee;
+import demosprings.entity.Employee;
 import demosprings.exception.ResourceNotFoundException;
-import demosprings.repository.UserRepository;
+import demosprings.repository.EmployeeRepository;
 
 @Service
 @Transactional
 
-public class UserServiceImpl implements UserService {
+public class EmployeeServiceImpl implements EmployeeService {
 	
-	private final UserRepository userRepository;
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	public UserServiceImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	private final EmployeeRepository employeeRepository;
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
 		
 	}
 	
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	public Employee createUser(Employee user) {
 		logger.info("creating user: "+user.getFirstname(),user.getLastname());
 		try {
-			Employee saveUser = userRepository.save(user);
+			Employee saveUser = employeeRepository.save(user);
 			logger.info("user created successfully with id: " + saveUser.getId());
 			return saveUser;
 		} catch (Exception ex){
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Employee updateUser( Integer id ,Employee user) {
 		logger.info("Updating user with id: {}", id);
-		Employee existing =userRepository.findById(id).
+		Employee existing = employeeRepository.findById(id).
 				orElseThrow(() -> {
 					logger.error("user not found with id: " +id);
 					return new ResourceNotFoundException(" user not found"+id);
@@ -50,25 +50,25 @@ public class UserServiceImpl implements UserService {
 		existing.setEmailid(user.getEmailid());
 
 
-		Employee updatedUser = userRepository.save(existing);
+		Employee updatedUser = employeeRepository.save(existing);
 		logger.info("User updated successfully with id: {}", updatedUser.getId());
 		return updatedUser;
 	}
 	
 	public void deleteUser(Integer id) {
 		logger.info("Deleting user with id: {}", id);
-		Employee existing =userRepository.findById(id).
+		Employee existing = employeeRepository.findById(id).
 				orElseThrow(()-> {
 					logger.error("User not found with id: {}", id);
 					return new ResourceNotFoundException("User not found with id: " + id);
 
 				});
-		userRepository.delete(existing);
+		employeeRepository.delete(existing);
 		logger.info("User deleted successfully with id: {}", id);
 	}
 	public Employee getUserById(Integer id) {
 		logger.info("Fetching user with id: {}", id);
-		return userRepository.findById(id).
+		return employeeRepository.findById(id).
 				orElseThrow(()->{
 					logger.error("User not found with id: {}", id);
 					return new ResourceNotFoundException("User not found with id: " + id);
@@ -77,17 +77,17 @@ public class UserServiceImpl implements UserService {
 	
 	public List<Employee> getAllUsers(){
 		logger.info("Fetching all active users");
-		return userRepository.findAllActiveEmployees();
+		return employeeRepository.findAllActiveEmployees();
 	}
 	public List<Employee> getAllUsersWithDeleted(){
 		logger.info("Fetching all users, including soft-deleted ones");
-		return userRepository.findAll();
+		return employeeRepository.findAll();
 	}
 
 	public void hardDelete(Integer id){
 		logger.info("Hard deleting user with id: {}", id);
 		try {
-			userRepository.deleteById(id);
+			employeeRepository.deleteById(id);
 			logger.info("User hard deleted successfully with id: {}", id);
 		} catch (Exception ex) {
 			logger.error("Error occurred while hard deleting user with id: {}", id, ex);
@@ -97,13 +97,13 @@ public class UserServiceImpl implements UserService {
 
 	public void softDeleteUser(Integer id) {
 			logger.info("Soft deleting user with id: {}", id);
-			Employee employee = userRepository.findById(id)
+			Employee employee = employeeRepository.findById(id)
 					.orElseThrow(() -> {
 						logger.error("User not found with id: {}", id);
 						return new RuntimeException("Employee not found with id: " + id);
 					});
 			employee.setDeleted(true);
-			userRepository.save(employee);
+			employeeRepository.save(employee);
 		logger.info("User soft-deleted successfully with id: {}", id);
 	}
 

@@ -3,9 +3,9 @@ package demosprings.service;
 
 import java.util.List;
 
-import demosprings.enity.Employee;
+import demosprings.entity.Employee;
 
-public interface UserService {
+public interface EmployeeService {
 	
 	Employee createUser(Employee user);
 	
