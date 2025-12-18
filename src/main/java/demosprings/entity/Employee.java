@@ -1,7 +1,9 @@
 package demosprings.entity;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+
 
 
 @Entity
@@ -26,31 +28,12 @@ public class Employee {
 
     private Integer employeeId;
 
-    public Integer getEmployeeId() {
-        return employeeId;
-    }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
-    }
 
-    public String getMobileno() {
-        return mobileno;
-    }
-
-    public void setMobileno(String mobileno) {
-        this.mobileno = mobileno;
-    }
 
     private boolean isDeleted;
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 // getters and setters
 
     public Integer getId() {
@@ -84,4 +67,29 @@ public class Employee {
     public void setEmailid(String emailid) {
         this.emailid = emailid;
     }
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getMobileno() {
+        return mobileno;
+    }
+
+    public void setMobileno(String mobileno) {
+        this.mobileno = mobileno;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
 }

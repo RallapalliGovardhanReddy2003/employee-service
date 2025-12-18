@@ -30,6 +30,23 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer>{
     )
     List<Employee> findEmployeesByAddress(@Param("address") String address);
 
+
+
+
+    @Query(value = """
+SELECT e.id AS id,
+       e.firstname AS firstname,
+       e.emailid AS emailid,
+       e.is_deleted AS isDeleted,
+       a.address AS address,
+       a.permanent_address AS permanentAddress
+FROM employee e
+JOIN addresses a ON e.employee_id = a.employee_id
+WHERE e.id = :id
+""", nativeQuery = true)
+    List<Employee> findEmployeeWithAddress(@Param("id") Integer id);
+
+
     List<Employee> findEmployeesByEmployeeId(Integer employeeId);
 
 }

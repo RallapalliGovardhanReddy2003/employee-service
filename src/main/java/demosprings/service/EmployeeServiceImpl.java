@@ -116,6 +116,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findEmployeesByEmployeeId(employeeId);
 	}
 
+	public List<Employee> findEmployeeWithAddress(Integer id) {
+		logger.info("Fetching employees with address for Id: {}", id);
+		return employeeRepository.findEmployeeWithAddress(id);
+
+	}
 
 }
 

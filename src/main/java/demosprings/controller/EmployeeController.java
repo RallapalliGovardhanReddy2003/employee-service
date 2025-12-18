@@ -85,6 +85,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployeesByEmployeeId(employeeId));
     }
 
+    @GetMapping("/employees-with-address/{id}/details")
+    public ResponseEntity<List<Employee>> getEmployeesWithAddress(@PathVariable Integer id) {
+        return ResponseEntity.ok( employeeService.findEmployeeWithAddress(id));
+    }
+
 
 
 

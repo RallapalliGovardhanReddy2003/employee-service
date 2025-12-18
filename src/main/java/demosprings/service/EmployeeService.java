@@ -25,6 +25,9 @@ public interface EmployeeService {
 	List<Employee> getEmployeesByLocation(String address);
 
 	List<Employee> getEmployeesByEmployeeId(Integer employeeId);
+
+
+	List<Employee> findEmployeeWithAddress(Integer id);
 }
 
 
