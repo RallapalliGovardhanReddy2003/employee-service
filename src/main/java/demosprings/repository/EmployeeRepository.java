@@ -29,5 +29,8 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer>{
             nativeQuery = true
     )
     List<Employee> findEmployeesByAddress(@Param("address") String address);
+
+    List<Employee> findEmployeesByEmployeeId(Integer employeeId);
+
 }
 

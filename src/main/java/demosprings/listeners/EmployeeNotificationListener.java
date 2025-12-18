@@ -34,9 +34,9 @@ public class EmployeeNotificationListener {
         }
 
         // SMS
-        if (u.getMonbno() != null) {
+        if (u.getMobileno() != null) {
             smsService.sendSms(
-                "+91" + u.getMonbno(),
+                "+91" + u.getMobileno(),
                 "Hi " + u.getFirstname() + ", welcome!", null
             );
         }

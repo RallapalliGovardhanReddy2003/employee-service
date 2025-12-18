@@ -26,6 +26,21 @@ public class Employee {
 
     private Integer employeeId;
 
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getMobileno() {
+        return mobileno;
+    }
+
+    public void setMobileno(String mobileno) {
+        this.mobileno = mobileno;
+    }
 
     private boolean isDeleted;
 
@@ -60,14 +75,6 @@ public class Employee {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getMonbno() {
-        return mobileno;
-    }
-
-    public void setMonbno(String monbno) {
-        this.mobileno = monbno;
     }
 
     public String getEmailid() {

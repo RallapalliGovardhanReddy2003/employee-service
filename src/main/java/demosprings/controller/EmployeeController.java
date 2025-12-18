@@ -40,7 +40,7 @@ public class EmployeeController {
         emailService.sendSimple(created.getEmailid(), "registration confirmataion",
                 "successfully registered");}
         if(sendSms){
-        String sid = smsService.sendSms("+17754025856", created.getMonbno(), "registered employee");
+        String sid = smsService.sendSms("+17754025856", created.getMobileno(), "registered employee");
         }
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
@@ -79,6 +79,10 @@ public class EmployeeController {
     @GetMapping("/by-location/{address}")
     public ResponseEntity<List<Employee>> getEmployeesByLocation(@PathVariable String address){
         return ResponseEntity.ok(employeeService.getEmployeesByLocation(address));
+    }
+    @GetMapping("/by-employeeid/{employeeId}")
+    public ResponseEntity<List<Employee>> getEmployeesByEmployeeId(@PathVariable Integer employeeId){
+        return ResponseEntity.ok(employeeService.getEmployeesByEmployeeId(employeeId));
     }
 
 

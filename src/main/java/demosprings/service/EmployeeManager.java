@@ -33,7 +33,7 @@ public class EmployeeManager {
         Employee existing = employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Employee not found"));
         existing.setFirstname(payload.getFirstname());
         existing.setLastname(payload.getLastname());
-        existing.setMonbno(payload.getMonbno());
+        existing.setMobileno(payload.getMobileno());
         existing.setEmailid(payload.getEmailid());
         return employeeRepository.save(existing);
     }

@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		existing.setFirstname(user.getFirstname());
 		existing.setLastname(user.getLastname());
-		existing.setMonbno(user.getMonbno());
+		existing.setMobileno(user.getMobileno());
 		existing.setEmailid(user.getEmailid());
 
 
@@ -110,6 +110,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getEmployeesByLocation(String address) {
 		logger.info("Fetching employees by location: {}", address);
 		return employeeRepository.findEmployeesByAddress(address);
+	}
+	public List<Employee> getEmployeesByEmployeeId(Integer employeeId) {
+		logger.info("Fetching employees by employeeId: {}", employeeId);
+		return employeeRepository.findEmployeesByEmployeeId(employeeId);
 	}
 
 
