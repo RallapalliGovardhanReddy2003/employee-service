@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Integer>{
 
@@ -48,6 +49,8 @@ WHERE e.id = :id
 
 
     List<Employee> findEmployeesByEmployeeId(Integer employeeId);
+
+    Optional<Employee> findById(Integer id);
 
 }
 
