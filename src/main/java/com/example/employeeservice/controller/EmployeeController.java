@@ -14,7 +14,7 @@ import com.example.employeeservice.entity.Employee;
 import com.example.employeeservice.service.EmployeeService;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/employees")
 @Validated
 public class EmployeeController {
 
@@ -84,6 +84,11 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployeesByEmployeeId(@PathVariable Integer employeeId){
         return ResponseEntity.ok(employeeService.getEmployeesByEmployeeId(employeeId));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeByIdSimple(@PathVariable Integer id) {
+        return ResponseEntity.ok(employeeService.getUserById(id));
+    }
+
 
     @GetMapping("/employees-with-address/{id}/details")
     public ResponseEntity<List<Employee>> getEmployeesWithAddress(@PathVariable Integer id) {
