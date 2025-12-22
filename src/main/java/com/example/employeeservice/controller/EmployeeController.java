@@ -15,6 +15,8 @@ import com.example.employeeservice.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employees")
+@CrossOrigin(origins = "http://localhost:4200")
+
 @Validated
 public class EmployeeController {
 
